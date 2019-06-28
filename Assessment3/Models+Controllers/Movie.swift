@@ -16,7 +16,7 @@ struct Movie: Decodable {
     let title: String
     let rating: Double
     let overview: String
-    let image: String
+    let image: String?
     
     enum CodingKeys: String, CodingKey {
         case title

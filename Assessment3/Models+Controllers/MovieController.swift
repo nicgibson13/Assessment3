@@ -46,8 +46,9 @@ class MovieController {
         } .resume()
     }
     func fetchImageFor(movie: Movie, completion: @escaping (UIImage?) -> Void) {
+        guard let movieImage = movie.image else {completion(nil);return}
         guard let imageBaseURL = imageBaseURL else {completion(nil);return}
-        let finalURL = imageBaseURL.appendingPathComponent(movie.image)
+        let finalURL = imageBaseURL.appendingPathComponent(movieImage)
         URLSession.shared.dataTask(with: finalURL) { (data, _, error) in
             if let error = error {
                 print("🐢 couldn't get the data for the image... \(error.localizedDescription)")
