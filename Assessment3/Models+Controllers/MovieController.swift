@@ -14,6 +14,7 @@ class MovieController {
     
     //MARK: Properties
     let baseURL = URL(string: "https://api.themoviedb.org/3/search/movie")
+    let imageBaseURL = URL(string: "http://image.tmdb.org/t/p/w500")
     var movies: [Movie] = []
     
     //MARK: CRUD
@@ -45,19 +46,19 @@ class MovieController {
         } .resume()
     }
     func fetchImageFor(movie: Movie, completion: @escaping (UIImage?) -> Void) {
-        let url = movie.image
-        
-        URLSession.shared.dataTask(with: url) { (data, _, error) in
+        guard let imageBaseURL = imageBaseURL else {completion(nil);return}
+        let finalURL = imageBaseURL.appendingPathComponent(movie.image)
+        URLSession.shared.dataTask(with: finalURL) { (data, _, error) in
             if let error = error {
                 print("🐢 couldn't get the data for the image... \(error.localizedDescription)")
                 completion(nil);return
             }
-            
+
             guard let data = data else {
                 print("Where is the image data? 🐭")
                 completion(nil);return
             }
-            
+
             let image = UIImage(data: data)
             completion(image)
         }

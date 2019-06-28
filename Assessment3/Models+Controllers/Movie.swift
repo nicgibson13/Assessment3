@@ -14,15 +14,15 @@ struct TopLevelJSON: Decodable {
 
 struct Movie: Decodable {
     let title: String
-    let rating: String
+    let rating: Double
     let overview: String
-    let image: URL
+    let image: String
     
     enum CodingKeys: String, CodingKey {
         case title
         case rating = "vote_average"
         case overview
-        case image
+        case image = "poster_path"
     }
 }
 
